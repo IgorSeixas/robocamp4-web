@@ -10,10 +10,10 @@ ${ALERT_INFO}      class:alert-info
 *** Keywords ***
 ### Hooks
 Open Session
-    Run Keyword if    "${browser}"   ==   "chrome"
+    Run Keyword if    '${browser}' == 'chrome'
     ...               Open Chrome 
 
-    Run Keyword if    "${browser}"      ==    "headless"
+    Run Keyword if    '${browser}' == 'headless'
     ...               Open Chrome Headless
 
     Set Selenium Implicit Wait    5
