@@ -1,18 +1,23 @@
 *** Settings ***
-Documentation       Este arquivo implementa abertura e fechamento do navegador
+Documentation    Este arquivo implementa abertura e fechamento do navegador
 
 ***Variables***
-${base_url}     http://pixel-web:3000
+${base_url}    http://pixel-web:3000
 
-${ALERT_DANGER}     class:alert-danger
-${ALERT_INFO}       class:alert-info
+${ALERT_DANGER}    class:alert-danger
+${ALERT_INFO}      class:alert-info
 
 *** Keywords ***
 ### Hooks
 Open Session
-    Open Chrome Headless
-    Set Selenium Implicit Wait  5
-    Set Window Size     1280        800
+    Run Keyword if    "${browser}"   ==   "chrome"
+    ...               Open Chrome 
+
+    Run Keyword if    "${browser}"      ==    "headless"
+    ...               Open Chrome Headless
+
+    Set Selenium Implicit Wait    5
+    Set Window Size               1280    800
 
 Close Session
     Close Browser
@@ -22,18 +27,18 @@ After Test
 
 After Test WCLS
     Capture Page Screenshot
-    Execute Javascript      localStorage.clear();
+    Execute Javascript         localStorage.clear();
 
 Login Session
     Open Session
-    Login With  papito@ninjapixel.com   pwd123
+    Login With      papito@ninjapixel.com    pwd123
 
 Product Form Session
     Login Session
     Go To Product Form
-   
+
 Open Chrome
-    Open Browser    ${base_url}/login    chrome   options=add_experimental_option('excludeSwitches', ['enable-logging'])
+    Open Browser    ${base_url}/login    chrome    options=add_experimental_option('excludeSwitches', ['enable-logging'])
 
 Open Chrome Headless
-    Open Browser    ${base_url}/login    headlesschrome     options=add_argument('--disable-dev-shm-usage')
+    Open Browser    ${base_url}/login    headlesschrome    options=add_argument('--disable-dev-shm-usage')
